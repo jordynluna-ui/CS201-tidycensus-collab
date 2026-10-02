@@ -25,4 +25,4 @@ For collaboration:
 
 Owner: Jordyn
 
-Collaborator: Name 2
+Collaborator: Mikayla

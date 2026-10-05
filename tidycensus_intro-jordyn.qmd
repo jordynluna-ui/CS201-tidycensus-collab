@@ -1,6 +1,6 @@
 ---
 title: "tidycensus Intro & GitHub Collab"
-author: "Jordyn Luna" 
+author: "Jordyn Luna Filipino Sistaz" 
 date: "`r Sys.Date()`"
 format: html
 editor: visual

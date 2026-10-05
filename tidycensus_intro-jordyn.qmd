@@ -14,7 +14,7 @@ toc: true
 # install.packages("reactable")
 # install.packages("ggpubr")
 
-library(tidycensus)  # star of the show, what we will use to import data
+library(tidycensus)  # star of the show, what we will use to import data (collecting data)
 library(tidyverse) # you know her
 library(reactable) # makes nice looking, interactive tables
 library(ggiraph) # makes interactive graphs and maps
@@ -41,7 +41,7 @@ API stands for Application Programming Interface. Here is the idea:
 [Request your own](https://api.census.gov/data/key_signup.html) or use Amber's (below).
 
 ```{r Define API Key, message=FALSE}
-census_api_key("")
+census_api_key("e10acabae2e59209d6f90d759b6ec97e5a226b3d")
 ```
 
 ## Import Variables
@@ -69,10 +69,10 @@ Let's investigate family poverty on Oahu at the census tract level.
 ```{r Import Data}
 oahu_poverty <- get_acs(
   geography = "tract",
-  variables = c(percent_poverty = "DP03_0119P"),
+  variables = c(percent_poverty = "DP03_0119P"), 
   state = "HI",
   county = "Honolulu",
-  geometry = TRUE,
+  geometry = TRUE, # gives you back the stuff that is mapable
   output = "wide",
   year = 2024) %>% 
   dplyr::filter(GEOID != "15003981200" & GEOID !="15003981900") # filters out tract in NW Hawaiian Islands that makes map very small and Mamala Bay Golf Course that has %100 percent of families living below the poverty line(??)
@@ -107,10 +107,10 @@ Now let's look at family poverty in Honolulu County over time
 ## Try an example of your own
 
 ```{r}
-# get the data (looking at ____)
-NAME <- get_acs(
+# get the data (looking at computer & internet access)
+oahu_computer_internet <- get_acs(
   geography = "tract",
-  variables = c(NAME = "DP02_0158"),
+  variables = c(computer_access = "DP02_0152"),
   state = "HI",
   county = "Honolulu",
   geometry = TRUE,
@@ -119,11 +119,11 @@ NAME <- get_acs(
   dplyr::filter(GEOID != "15003981200" & GEOID !="15003981900")
 
 # map it
-oahu_unemployment_map <- ggplot(NAME) +
+oahu_unemployment_map <- ggplot(oahu_computer_internet) +
   geom_sf_interactive(
     aes(
-      fill = percent_unemploymentE,
-      tooltip = paste(NAME, ": ", percent_unemploymentE, "%"),
+      fill = computer_accessE,
+      tooltip = paste(NAME, ": ", computer_accessE, "%"),
       data_id = NAME)) +
   scale_fill_viridis_c(option = "plasma") +
   theme_void() 

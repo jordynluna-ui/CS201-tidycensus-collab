@@ -246,7 +246,7 @@ Investigating (insert variable here) on Oahu at the census tract level.
 
 oahu_educational_attainment <- get_acs(
   geography = "tract",
-  variables = c(oahu_educational_attainment = "DP02_0059P"),
+  variables = c(educational_attainment = "DP02_0059P"),
   state = "HI",
   county = "Honolulu",
   geometry = TRUE,
@@ -262,6 +262,7 @@ oahu_educational_attainment_map <- ggplot(oahu_educational_attainment) +
       data_id = NAME)) +
   scale_fill_viridis_c(option = "brewer blues") +
   theme_void() 
+girafe(ggobj = oahu_educational_attainment_map, width = 700, height = 400)
 ```
 
 ### Mapping

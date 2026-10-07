@@ -134,6 +134,8 @@ girafe(ggobj = oahu_unemployment_map, width = 700, height = 400)
 
 ## Back to Exploring Poverty...
 
+## Start Here
+
 ## Time Series
 
 ```{r Get Time Data, message=FALSE}

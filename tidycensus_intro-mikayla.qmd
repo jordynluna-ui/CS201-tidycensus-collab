@@ -22,7 +22,7 @@ library(ggpubr) # does some statistics and prints the results on our graphs
 options(progress_enabled = FALSE)
 ```
 
-## Today's Data
+## Today's Data yay
 
 The data we will use for this activity comes directly from the US Census Bureau! This data is public and free, but does require some specialized knowledge/skill to acquire and use. You'll learn that today!
 

@@ -254,6 +254,14 @@ oahu_educational_attainment <- get_acs(
   year = 2024) %>% 
   dplyr::filter(GEOID != "15003981200" & GEOID !="15003981900")
 
+oahu_educational_attainment_map <- ggplot(oahu_educational_attainment) +
+  geom_sf_interactive(
+    aes(
+      fill = educational_attainmentE,
+      tooltip = paste(NAME, ": ", educational_attainmentE, "%"),
+      data_id = NAME)) +
+  scale_fill_viridis_c(option = "brewer blues") +
+  theme_void() 
 ```
 
 ### Mapping

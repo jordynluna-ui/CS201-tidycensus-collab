@@ -254,6 +254,12 @@ oahu_educational_attainment <- get_acs(
   year = 2024) %>% 
   dplyr::filter(GEOID != "15003981200" & GEOID !="15003981900")
 
+```
+
+### Mapping
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+
 oahu_educational_attainment_map <- ggplot(oahu_educational_attainment) +
   geom_sf_interactive(
     aes(
@@ -263,13 +269,6 @@ oahu_educational_attainment_map <- ggplot(oahu_educational_attainment) +
   scale_fill_viridis_c(option = "brewer blues") +
   theme_void() 
 girafe(ggobj = oahu_educational_attainment_map, width = 700, height = 400)
-```
-
-### Mapping
-
-```{r, message=FALSE, warning=FALSE, results='hide'}
-
-
 ```
 
 ### Time Series

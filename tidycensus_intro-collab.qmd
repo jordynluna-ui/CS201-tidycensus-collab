@@ -316,6 +316,17 @@ oahu_family_poverty_educational_attainment <- get_acs(
   output = "wide",
   year = 2024) %>% 
   dplyr::filter(GEOID != "15003981200" & GEOID !="15003981900")
+
+ggplot(oahu_family_poverty_educational_attainment, aes(x = percent_povertyE,y = percent_educational_attainmentE)) +
+  geom_point() +
+  geom_smooth(method = "lm") + # adds a regression line (LOESS), method = "lm" is a linear line
+  stat_cor() + # prints R and p
+  theme_minimal() + 
+  labs(title = "Comparing Rates of Educational Attainment to Poverty, Honolulu County",
+       subtitle = "ACS 5-year, 2024 release",
+       x = "Percent of Families Living Below the Poverty Line",
+       y = "Percent Educational Attainment",
+       caption = "Shaded area represents margin of error around the estimate")
 ```
 
 ### Describe what you found

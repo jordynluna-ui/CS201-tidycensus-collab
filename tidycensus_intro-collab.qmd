@@ -20,6 +20,7 @@ library(reactable) # makes nice looking, interactive tables
 library(ggiraph) # makes interactive graphs and maps
 library(ggpubr) # does some statistics and prints the results on our graphs
 options(progress_enabled = FALSE)
+options(scipen = 999)
 ```
 
 ## Today's Data
@@ -296,7 +297,7 @@ ggplot(oahu_educational_attainment_2014_2024, aes(x = year, y = estimate, group 
   theme_minimal() + 
   labs(title = "Honolulu County Educational Attainment (ACS Rolling 5-year estimates)",
        x = "ACS Release Year (5-year window)",
-       y = "Percent in Educational Attainment")
+       y = "Educational Attainment Number of People")
 
 ```
 

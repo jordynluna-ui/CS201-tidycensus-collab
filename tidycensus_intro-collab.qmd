@@ -256,7 +256,7 @@ oahu_educational_attainment <- get_acs(
 
 ```
 
-### Mapping
+### Mappingg
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
 

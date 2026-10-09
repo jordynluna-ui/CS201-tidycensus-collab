@@ -326,7 +326,7 @@ ggplot(oahu_family_poverty_educational_attainment, aes(x = percent_povertyE,y = 
   labs(title = "Comparing Rates of Educational Attainment to Poverty, Honolulu County",
        subtitle = "ACS 5-year, 2024 release",
        x = "Percent of Families Living Below the Poverty Line",
-       y = "Percent Educational Attainment",
+       y = "Educational Attainment Number of People",
        caption = "Shaded area represents margin of error around the estimate")
 ```
 

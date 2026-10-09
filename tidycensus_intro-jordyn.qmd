@@ -41,7 +41,7 @@ API stands for Application Programming Interface. Here is the idea:
 [Request your own](https://api.census.gov/data/key_signup.html) or use Amber's (below).
 
 ```{r Define API Key, message=FALSE}
-census_api_key("e10acabae2e59209d6f90d759b6ec97e5a226b3d")
+# census_api_key("")
 ```
 
 ## Import Variables
@@ -132,6 +132,33 @@ girafe(ggobj = oahu_unemployment_map, width = 700, height = 400)
 
 ```
 
+# Wednesday Warmup
+
+```{r}
+# get the data (looking at computer & internet access)
+oahu_poverty_level <- get_acs(
+  geography = "tract",
+  variables = c(poverty_level = "DP03_0119P"),
+  state = "HI",
+  county = "Honolulu",
+  geometry = TRUE,
+  output = "wide",
+  year = 2024) %>% 
+  dplyr::filter(GEOID != "15003981200" & GEOID !="15003981900")
+
+# map it
+oahu_poverty_map <- ggplot(oahu_poverty_level) +
+  geom_sf_interactive(
+    aes(
+      fill = poverty_levelE,
+      tooltip = paste(NAME, ": ", poverty_levelE, "%"),
+      data_id = NAME)) +
+  scale_fill_viridis_c(option = "turbo") +
+  theme_void() 
+
+girafe(ggobj = oahu_poverty_map, width = 700, height = 400)
+```
+
 ## Back to Exploring Poverty...
 
 ## Start Here
@@ -202,7 +229,7 @@ oahu_family_poverty_college_education <- get_acs(
 ```{r Scatter Plot, warning=FALSE, message=FALSE}
 ggplot(oahu_family_poverty_college_education, aes(x = percent_povertyE,y = percent_BAE)) +
   geom_point() +
-  geom_smooth() + # adds a regression line (LOESS)
+  geom_smooth(method = "lm") + # adds a regression line (LOESS), method = "lm" is a linear line
   stat_cor() + # prints R and p
   theme_minimal() + 
   labs(title = "Comparing Rates of Higher Education to Poverty, Honolulu County",
@@ -242,10 +269,20 @@ REMEMBER! [Pull]{.underline} before working in the `-collab.qmd` file. [Save, Co
 
 ### Import Data
 
-Investigating (insert variable here) on Oahu at the census tract level.
+Investigating Educational Attainment on Oahu at the census tract level.
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
 
+# get the data 
+oahu_educational_attainment <- get_acs(
+  geography = "tract",
+  variables = c(educational_attainment = "DP02_0059P"),
+  state = "HI",
+  county = "Honolulu",
+  geometry = TRUE,
+  output = "wide",
+  year = 2024) %>% 
+  dplyr::filter(GEOID != "15003981200" & GEOID !="15003981900")
 
 ```
 
@@ -253,13 +290,46 @@ Investigating (insert variable here) on Oahu at the census tract level.
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
 
+# map it
+oahu_educational_attainment_map <- ggplot(oahu_educational_attainment) +
+  geom_sf_interactive(
+    aes(
+      fill = educational_attainmentE,
+      tooltip = paste(NAME, ": ", educational_attainmentE, "%"),
+      data_id = NAME)) +
+  scale_fill_viridis_c(option = "brewer blues") +
+  theme_void() 
 
+girafe(ggobj = oahu_educational_attainment_map, width = 700, height = 400)
 ```
 
 ### Time Series
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
 
+years <- 2014:2024 # specify years
+names(years) <- years
+
+oahu_educational_attainment_2014_2024 <- map_dfr(years, ~{
+  get_acs(
+    geography = "county",
+    variables = c(educational_attainment = "DP02_0059P"),
+    state = "HI",
+    county = "Honolulu",
+    year = .x,
+    survey = "acs5")}, .id = "year")
+
+ggplot(oahu_educational_attainment_2014_2024, aes(x = year, y = estimate, group = 1)) + 
+  geom_ribbon(aes(ymax = estimate + moe, ymin = estimate - moe), 
+              fill = "steelblue",
+              alpha = 0.4) + 
+  geom_line(color = "steelblue") + 
+  geom_point(color = "steelblue", size = 2) + 
+  theme_minimal() + 
+  labs(title = "Honolulu County Educational Attainment (ACS Rolling 5-year estimates)",
+       x = "ACS Release Year (5-year window)",
+       y = "Percent in Educational Attainment",
+       caption = "Shaded area represents margin of error around the estimate")
 
 ```
 

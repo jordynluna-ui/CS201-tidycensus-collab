@@ -275,7 +275,6 @@ girafe(ggobj = oahu_educational_attainment_map, width = 700, height = 400)
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
 
-
 ```
 
 ### Scatter Plot

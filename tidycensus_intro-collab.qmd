@@ -331,3 +331,5 @@ ggplot(oahu_family_poverty_educational_attainment, aes(x = percent_povertyE,y = 
 ```
 
 ### Describe what you found
+
+We found that the relationship between poverty and educational attainment at the tract level in Honolulu County is that there is a negative correlation. It is less likely that a high number of people will have reached educational attainment compared to those that are above the poverty line.
